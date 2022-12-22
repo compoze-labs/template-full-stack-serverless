@@ -1,0 +1,53 @@
+# package directories
+**/node_modules
+**/.build
+jspm_packages
+
+# build directories
+**/deploy
+
+# batect directories
+.batect/caches
+
+# libraries
+**/deploy/*
+**/lib/*
+
+.DS_STORE
+node_modules
+scripts/flow/*/.flowconfig
+.flowconfig
+*~
+*.pyc
+.grunt
+_SpecRunner.html
+__benchmarks__
+**/build/
+**/storybook-static/
+**/.storybook/__snapshots__/__diff_output__/
+remote-repo/
+coverage/
+.module-cache
+fixtures/dom/public/react-dom.js
+fixtures/dom/public/react.js
+test/the-files-to-test.generated.js
+*.log*
+chrome-user-data
+*.sublime-project
+*.sublime-workspace
+.idea
+*.iml
+.vscode
+*.swp
+*.swo
+
+**/test-results/
+**/playwright-report/
+**/playwright/.cache/
+**/test-results/
+**/playwright-report/
+**/playwright/.cache/
+
+.env.development
+.env.test
+.env.e2e

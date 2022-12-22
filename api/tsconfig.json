@@ -1,0 +1,16 @@
+{
+    "extends": "./tsconfig.paths.json",
+    "compilerOptions": {
+        "rootDirs": ["./src", "./tests"],
+        "outDir": "./deploy",
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "noImplicitAny": true,
+        "preserveConstEnums": true,
+        "allowSyntheticDefaultImports": true,
+        "strictNullChecks": true,
+        "resolveJsonModule": true,
+        "baseUrl": "../"
+    },
+    "exclude": ["webpack.config.ts"]
+}

@@ -1,0 +1,30 @@
+# enables ./batect diagrams
+include:
+  - type: git
+    repo: git@github.com:compoze-labs/batect-architecture-diagrams.git
+    ref: 1.0.0 # or other tagged version in the repo
+
+containers:
+  shell:
+    dockerfile: Dockerfile.shell
+    build_directory: .batect
+    build_target: final
+    working_directory: /home/container-user/code
+    volumes:
+      - local: <{batect.project_directory}
+        container: /home/container-user/code
+      - local: ~/.ssh # to load ssh keys for git
+        container: /home/container-user/.ssh
+      - type: cache # macos save dependencies inside container
+        name: node_modules
+        container: /code/node_modules
+      - local: ~/.aws # load aws credentials for profiles
+        container: /home/container-user/.aws
+    run_as_current_user:
+      enabled: true
+      home_directory: /home/container-user
+
+tasks:
+  shell:
+    run:
+      container: shell

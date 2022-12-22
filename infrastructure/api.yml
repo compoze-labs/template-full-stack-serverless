@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  ProjectName:
+    Type: String
+
+Resources:
+  ArtifactBucketNonprod:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${AWS::StackName}-nonprod-deploymentartifacts
+
+  ArtifactBucketProd:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${AWS::StackName}-prod-deploymentartifacts

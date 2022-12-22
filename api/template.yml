@@ -1,0 +1,56 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Timeout: 10
+
+Parameters:
+  Environment:
+    Type: String
+    Description: Environment of template
+
+Resources:
+  ApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      OpenApiVersion: 3.0.3
+      Name: !Sub ${AWS::StackName}
+      StageName: !Ref Environment
+      Cors:
+        AllowMethods: "'GET'"
+        AllowHeaders: "'Content-Type'"
+        AllowOrigin: "'*'"
+      Auth:
+        UsagePlan:
+          CreateUsagePlan: PER_API
+          UsagePlanName: !Sub ${AWS::StackName}-${Environment}-UsagePlan
+          Quota:
+            Limit: 5000
+            Period: DAY
+          Throttle:
+            BurstLimit: 200
+            RateLimit: 100
+          Description: API Usage Plan
+      TracingEnabled: true
+
+  getThing:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: deploy/
+      Handler: getThing.handler
+      Runtime: nodejs14.x
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Events:
+        getThing:
+          Type: Api
+          Properties:
+            Path: /thing
+            Method: get
+            RestApiId: !Ref ApiGateway
+
+Outputs:
+  ApiEndpoint:
+    Value: !Sub https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${Environment}

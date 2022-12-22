@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "module": "CommonJS",
+        "target": "ES2017",
+        "rootDirs": ["."],
+        "types": ["jest"],
+        "outDir": "./lib",
+        "sourceMap": true,
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "esModuleInterop": true,
+        "noImplicitAny": true,
+        "preserveConstEnums": true,
+        "allowSyntheticDefaultImports": true,
+        "strictNullChecks": true,
+        "baseUrl": "../"
+    },
+    "include": ["./**/*.ts"]
+}

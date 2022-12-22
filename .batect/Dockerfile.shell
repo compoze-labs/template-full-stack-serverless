@@ -1,0 +1,52 @@
+FROM debian:11-slim as build
+
+RUN apt-get update && apt-get install \
+    sudo \
+    curl \
+    zip \
+    unzip \
+    gnupg \
+    software-properties-common \
+    jq \
+    make \
+    git \
+    zsh \
+    rsync \
+    -y
+
+ADD install-aws-cli.sh /install/
+RUN [ "/bin/bash", "-c", "./install/install-aws-cli.sh"]
+
+ADD install-nodejs.sh /install/
+RUN [ "/bin/bash", "-c", "./install/install-nodejs.sh"]
+
+COPY --from=docker:dind /usr/local/bin/docker /usr/local/bin/
+
+RUN useradd --create-home --shell /bin/bash -u 1000 container-user
+RUN groupadd docker
+RUN usermod -aG docker container-user
+
+RUN npm install -g pnpm
+
+USER container-user
+
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+ADD default.zshrc /home/container-user/.zshrc
+
+RUN git clone https://github.com/nvm-sh/nvm.git /home/container-user/.nvm
+
+FROM build as test
+
+RUN git --version
+RUN aws --version
+RUN jq --version
+RUN make --version
+RUN docker --version
+RUN node --version
+RUN npm --version
+RUN pnpm --version
+RUN rsync --version
+
+FROM test as final
+
+ENTRYPOINT [ "zsh" ]
