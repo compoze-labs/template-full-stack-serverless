@@ -17,10 +17,11 @@ get_environment_vars() {
 
 PRODUCT_NAME=$1
 COMPONENT_NAME=$2
-ENV=$3
+BUCKET_NAME=$3
+ENV=$4
 
+DEPLOYMENT_BUCKET="${BUCKET_NAME}-${ENV}"
 STACK_PREFIX="${PRODUCT_NAME}-${COMPONENT_NAME}"
-DEPLOYMENT_BUCKET="${STACK_PREFIX}-${ENV}-deploymentartifacts"
 STACK_NAME="${STACK_PREFIX}-${ENV}"
 
 pnpm clean
@@ -38,5 +39,5 @@ sam deploy --stack-name ${STACK_NAME} \
     --s3-bucket "${DEPLOYMENT_BUCKET}" \
     --capabilities CAPABILITY_IAM \
     --no-fail-on-empty-changeset \
-    --region us-east-2 \
+    --region <REGION> \
     --parameter-overrides "$environments"

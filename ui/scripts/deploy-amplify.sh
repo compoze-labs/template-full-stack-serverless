@@ -3,13 +3,13 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 set -euo pipefail
 
-ENV=$1
-PRODUCT_NAME=$2
-COMPONENT_NAME=$3
+PRODUCT_NAME=$1
+COMPONENT_NAME=$2
+ENV=$3
 
 APPNAME="${PRODUCT_NAME}-${COMPONENT_NAME}"
 
-pnpm build:${ENV}
+pnpm build:environment ${ENV}
 APPID=$(aws amplify list-apps | jq -r ".apps[] | select(.name==\"${APPNAME}\") | .appId")
 
 BUILD_DIR="${SCRIPT_DIR}/../build"

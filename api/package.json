@@ -2,7 +2,8 @@
     "name": "@templatenametoreplace/api",
     "config": {
         "product": "templatenametoreplace",
-        "component": "api"
+        "component": "api",
+        "deploymentBucket": "<DEPLOYMENT_BUCKET_NAME>"
     },
     "description": "",
     "version": "1.0.0",
@@ -14,11 +15,8 @@
         "test": "jest",
         "clean": "rm -rf deploy",
         "build": "pnpm clean && webpack",
-        "deploy:nonprod": "./scripts/deploy.sh $npm_package_config_product $npm_package_config_component nonprod",
-        "deploy:prod": "./scripts/deploy.sh $npm_package_config_product $npm_package_config_component prod",
-        "e2e:local": "newman run e2e/collection.postman_collection.json -e e2e/nonprod.postman_environment.json --bail",
-        "e2e:nonprod": "newman run e2e/collection.postman_collection.json -e e2e/nonprod.postman_environment.json --bail",
-        "e2e:prod": "newman run e2e/collection.postman_collection.json -e e2e/prod.postman_environment.json --bail"
+        "deploy": "./scripts/deploy.sh $npm_package_config_product $npm_package_config_component $npm_package_config_deploymentBucket",
+        "e2e": "./scripts/e2e-test.sh"
     },
     "devDependencies": {
         "@templatenametoreplace/example": "workspace:^0.1.0",
