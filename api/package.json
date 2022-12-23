@@ -15,8 +15,8 @@
         "test": "jest",
         "clean": "rm -rf deploy",
         "build": "pnpm clean && webpack",
-        "deploy": "./scripts/deploy.sh $npm_package_config_product $npm_package_config_component $npm_package_config_deploymentBucket",
-        "e2e": "./scripts/e2e-test.sh"
+        "deploy:environment": "./scripts/deploy.sh $npm_package_config_product $npm_package_config_component $npm_package_config_deploymentBucket",
+        "e2e:environment": "./scripts/e2e-test.sh"
     },
     "devDependencies": {
         "@templatenametoreplace/example": "workspace:^0.1.0",

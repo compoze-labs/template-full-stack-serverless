@@ -34,7 +34,7 @@
         "start:built": "serve -s build",
         "build": "DISABLE_ESLINT_PLUGIN=true craco build",
         "build:environment": "./scripts/build.sh",
-        "deploy": "./scripts/deploy-amplify.sh $npm_package_config_product $npm_package_config_component",
+        "deploy:environment": "./scripts/deploy-amplify.sh $npm_package_config_product $npm_package_config_component",
         "test": "craco test --watchAll=false",
         "test:watch": "craco test",
         "test:withIntegration": "INCLUDE_INTEGRATION=true craco test --runInBand --watchAll=false",

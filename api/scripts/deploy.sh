@@ -18,11 +18,16 @@ get_environment_vars() {
 PRODUCT_NAME=$1
 COMPONENT_NAME=$2
 BUCKET_NAME=$3
-ENV=$4
 
 DEPLOYMENT_BUCKET="${BUCKET_NAME}.${ENV}"
 STACK_PREFIX="${PRODUCT_NAME}-${COMPONENT_NAME}"
 STACK_NAME="${STACK_PREFIX}-${ENV}"
+
+# check if environment variable, ENV, is set. If not, print error and exit
+if [ -z "${ENV:-}" ]; then
+    echo "ENV is not set. Please set ENV to the environment you want to deploy to."
+    exit 1
+fi
 
 pnpm clean
 pnpm build

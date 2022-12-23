@@ -5,9 +5,15 @@ set -euo pipefail
 
 PRODUCT_NAME=$1
 COMPONENT_NAME=$2
-ENV=$3
 
-APPNAME="${PRODUCT_NAME}-${COMPONENT_NAME}"
+
+# check if environment variable, ENV, is set. If not, print error and exit
+if [ -z "${ENV:-}" ]; then
+    echo "ENV is not set. Please set ENV to the environment you want to deploy to."
+    exit 1
+fi
+
+APPNAME="${PRODUCT_NAME}-${ENV}"
 
 pnpm build:environment ${ENV}
 APPID=$(aws amplify list-apps | jq -r ".apps[] | select(.name==\"${APPNAME}\") | .appId")
