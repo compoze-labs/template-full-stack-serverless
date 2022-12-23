@@ -6,7 +6,6 @@
     "description": "",
     "version": "1.0.0",
     "scripts": {
-        "preinstall": "./scripts/init.sh $npm_package_config_awsprofile",
         "bootstrap": "./scripts/bootstrap.sh $npm_package_name $npm_package_config_awsprofile",
         "update-infra": "./scripts/update-infra.sh $npm_package_name $npm_package_config_awsprofile",
         "nuke": "./scripts/nuke.sh $npm_package_name $npm_package_config_awsprofile",
