@@ -9,7 +9,12 @@ Parameters:
   Environment:
     Type: String
     Description: Environment of template
-
+  DomainName:
+    Type: String
+    Description: Domain name to attach to API Gateway
+  HostedZoneId:
+    Type: String
+    Description: Id of HostedZone Managing DNS
 Resources:
   ApiGateway:
     Type: AWS::Serverless::Api
