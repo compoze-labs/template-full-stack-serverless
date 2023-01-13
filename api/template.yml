@@ -55,12 +55,20 @@ Resources:
       ValidationMethod: DNS
     DependsOn: ApiGateway
 
+  GetThingLogGroup:
+    Type: AWS::Logs::LogGroup
+    DependsOn: [ getThing ]
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${getThing}
+      RetentionInDays: 30
+
   getThing:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: deploy/
       Handler: getThing.handler
-      Runtime: nodejs14.x
+      Runtime: nodejs16.x
+      ReservedConcurrentExecutions: 5
       Environment:
         Variables:
           NODE_ENV: production
@@ -71,6 +79,10 @@ Resources:
             Path: /thing
             Method: get
             RestApiId: !Ref ApiGateway
+      Tags:
+        Compoze:Source: Compoze
+        Compoze:Component: templatenametoreplace
+        Compoze:Environment: !Ref Environment            
 
 Outputs:
   ApiEndpoint:
