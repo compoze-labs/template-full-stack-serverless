@@ -38,6 +38,10 @@ Resources:
             RateLimit: 100
           Description: API Usage Plan
       TracingEnabled: true
+      MethodSettings:
+        - LoggingLevel: INFO
+          ResourcePath: '/*' # allows for logging on any resource
+          HttpMethod: '*' # allows for logging on any method
       Domain:
         DomainName: !Ref DomainName
         CertificateArn: !Ref ACMCertificate
