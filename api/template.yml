@@ -22,9 +22,6 @@ Resources:
       OpenApiVersion: 3.0.3
       Name: !Sub ${AWS::StackName}
       StageName: !Ref Environment
-      AccessLogSetting:
-        DestinationArn: !GetAtt ApiGatewayLogGroup.Arn
-        Format: '{ "requestId": "$context.requestId", "path": "$context.path", "routeKey": "$context.routeKey", "ip": "$context.identity.sourceIp", "requestTime": "$context.requestTime", "httpMethod": "$context.httpMethod","statusCode": $context.status }'
       Cors:
         AllowMethods: "'GET'"
         AllowHeaders: "'Content-Type'"
@@ -54,13 +51,6 @@ Resources:
         EndpointConfiguration: REGIONAL
         Route53:
           HostedZoneId: !Ref HostedZoneId
-
-  ApiGatewayLogGroup:
-    Type: AWS::Logs::LogGroup
-    Properties:
-      LogGroupName: !Sub /aws/apigateway/${ApiGateway}
-      RetentionInDays: 30
-  
   ACMCertificate:
     Type: "AWS::CertificateManager::Certificate"
     Properties:
