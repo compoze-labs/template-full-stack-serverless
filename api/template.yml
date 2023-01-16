@@ -38,10 +38,16 @@ Resources:
             RateLimit: 100
           Description: API Usage Plan
       TracingEnabled: true
+      CacheClusterEnabled: true
+      CacheClusterSize: 0.5
       MethodSettings:
         - LoggingLevel: INFO
           ResourcePath: '/*' # allows for logging on any resource
           HttpMethod: '*' # allows for logging on any method
+          CachingEnabled: true
+          CacheDataEncrypted: true
+          CacheTtlInSeconds: 30
+          MetricsEnabled: true
       AccessLogSetting:
         DestinationArn: String
         Format: String
