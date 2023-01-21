@@ -111,7 +111,7 @@ Resources:
   ApiGatewayWebAclAssociations:
     Type: AWS::WAFv2::WebACLAssociation
     Properties: 
-      ResourceArn: !Sub "arn:aws:apigateway:${AWS::Region}::/restapis/${ApiGateway}/stages/${Environment}"
+      ResourceArn: !Sub "arn:aws:apigateway:${AWS::Region}::/restapis/${ApiGateway}/stages/${ApiGateway.Stage}"
       WebACLArn: !GetAtt ApiGatewayWebAcl.Arn        
 
   GetThingLogGroup:
