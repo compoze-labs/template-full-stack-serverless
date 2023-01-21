@@ -89,7 +89,7 @@ Resources:
     Type: AWS::WAFv2::WebACL
     Properties:
       DefaultAction:
-        Block: {}
+        Allow: {}
       Scope: REGIONAL
       VisibilityConfig: 
         CloudWatchMetricsEnabled: true
