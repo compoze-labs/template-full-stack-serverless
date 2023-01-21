@@ -39,7 +39,7 @@ Resources:
           Description: API Usage Plan
       TracingEnabled: true
       CacheClusterEnabled: true
-      CacheClusterSize: 0.5
+      CacheClusterSize: "0.5"
       MethodSettings:
         - LoggingLevel: INFO
           ResourcePath: '/*' # allows for logging on any resource
