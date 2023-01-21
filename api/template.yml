@@ -22,7 +22,7 @@ Resources:
     DependsOn: [ getThing ]
     Properties:
       LogGroupName: !Sub /aws/apigateway/${ApiGateway}
-      RetentionInDays: 30
+      RetentionInDays: 365
 
   ApiGateway:
     Type: AWS::Serverless::Api
@@ -80,7 +80,7 @@ Resources:
     DependsOn: [ getThing ]
     Properties:
       LogGroupName: !Sub /aws/lambda/${getThing}
-      RetentionInDays: 30
+      RetentionInDays: 365
 
   getThing:
     Type: AWS::Serverless::Function
