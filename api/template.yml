@@ -39,6 +39,8 @@ Resources:
       OpenApiVersion: 3.0.3
       Name: !Sub ${AWS::StackName}
       StageName: !Ref Environment
+      EndpointConfiguration:
+        Type: REGIONAL      
       Cors:
         AllowMethods: "'GET'"
         AllowHeaders: "'Content-Type'"
@@ -83,6 +85,34 @@ Resources:
           HostedZoneId: !Ref HostedZoneId
       ValidationMethod: DNS
     DependsOn: ApiGateway
+  ApiGatewayWebAcl:
+    Type: AWS::WAFv2::WebACL
+    Properties:
+      DefaultAction:
+        Block: {}
+      Scope: REGIONAL
+      VisibilityConfig: 
+        CloudWatchMetricsEnabled: true
+        MetricName: web-acl
+        SampledRequestsEnabled: true
+      Rules:
+        - Action:
+            Block: {}
+          Name: RateLimit
+          Statement:
+            RateBasedStatement:
+              AggregateKeyType: IP
+              Limit: 1500
+          VisibilityConfig: 
+            CloudWatchMetricsEnabled: true
+            MetricName: rate-limit
+            SampledRequestsEnabled: true
+          Priority: 0
+  ApiGatewayWebAclAssociations:
+    Type: AWS::WAFv2::WebACLAssociation
+    Properties: 
+      ResourceArn: !Sub "arn:aws:apigateway:${AWS::Region}::/restapis/${ApiGateway}/stages/${Environment}"
+      WebACLArn: !GetAtt ApiGatewayWebAcl.Arn        
 
   GetThingLogGroup:
     Type: AWS::Logs::LogGroup
@@ -96,7 +126,7 @@ Resources:
     Properties:
       GroupDescription: Security group for Lambda function
       VpcId: !Ref VpcId
-      
+
   getThing:
     Type: AWS::Serverless::Function
     Properties:
